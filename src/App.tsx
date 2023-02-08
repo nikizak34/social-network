@@ -8,7 +8,7 @@ import Profile from "./components/Profile/Profile";
   return (
     <div className="app-wrapper">
         <Header/>
-      <div className="flex">
+      <div className="flex-00">
           <Navbar/>
           <Profile/>
       </div>
