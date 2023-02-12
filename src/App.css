@@ -44,9 +44,16 @@
   margin: 0 auto;
 }
 
-.flex{
+.flex-00{
   display: flex;
+  ;
 }
+
+.app-wrapper-content{
+  background-color: cornflowerblue;
+
+}
+
 
 
 
