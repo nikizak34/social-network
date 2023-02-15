@@ -1,10 +1,16 @@
 import React from 'react';
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
+import {PostDataType} from "../../../App";
 
+type myPostsType = {
+    postData: Array<PostDataType>
+}
 
-function MyPosts() {
- 
+function MyPosts(props: myPostsType) {
+
+    let postElement = props.postData.map(el => <Post message={el.message} likesCount={el.likesCount}/>)
+
     return (
 
         <div className={s.postsBlock}>
@@ -14,11 +20,11 @@ function MyPosts() {
                 <button>Add post</button>
             </div>
             <div className={s.posts}>
-                <Post name={"Hello World"}/>
-                <Post name={"Hello Nikita"}/>
+
+                {postElement}
+
 
             </div>
-
 
 
         </div>
