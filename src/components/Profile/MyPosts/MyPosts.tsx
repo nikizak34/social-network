@@ -1,27 +1,28 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {PostDataType} from "../../../redux/state";
+import {profilePageType} from "../../../redux/state";
 
 
 type myPostsType = {
-    postData: Array<PostDataType>
+    profilePage:profilePageType
     addPost:(postMessage:string)=>void
+    newPostText:string
+    updateNewPostText:(newText:string)=>void
 }
 
 function MyPosts(props: myPostsType) {
 
-    let postElement = props.postData.map(el => <Post message={el.message} likesCount={el.likesCount}/>)
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
+    let postElement = props.profilePage.postData.map(el => <Post message={el.message} likesCount={el.likesCount}/>)
+
     let addPost=()=>{
-        if(newPostElement.current){
-            props.addPost(newPostElement.current.value)
+            props.addPost(props.newPostText)
 
-        }else{
-            return''
-        }
-        newPostElement.current.value = ''
 
+
+    }
+    const onPostChange=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+        props.updateNewPostText(e.currentTarget.value)
 
     }
     return (
@@ -29,7 +30,10 @@ function MyPosts(props: myPostsType) {
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <textarea ref={newPostElement}></textarea><br/>
+                <textarea value={props.newPostText} onKeyDown={(e)=>{if (e.key==='Enter'){
+                    props.addPost(props.newPostText)}
+
+                }} onChange={onPostChange}></textarea><br/>
                 <button onClick={addPost}>Add post</button>
             </div>
             <div className={s.posts}>
