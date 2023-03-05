@@ -1,10 +1,10 @@
-let rerenderEntireTree=(state:AppType)=>{
+let rerenderEntireTree = (state: AppType) => {
 
 }
 
 export type AppType = {
-        dialogsPage: dialogsPageType
-        profilePage: profilePageType
+    dialogsPage: dialogsPageType
+    profilePage: profilePageType
 
 
 }
@@ -15,8 +15,8 @@ export type dialogsPageType = {
 }
 
 export type profilePageType = {
-    postData:Array<PostDataType>
-    newPostText:string
+    postData: Array<PostDataType>
+    newPostText: string
 }
 
 
@@ -35,7 +35,7 @@ export type DialogType = {
     id: number
 
 }
-let state:AppType = {
+let state: AppType = {
     profilePage: {
         postData: [
             {id: 1, message: 'Hi, how are you?', likesCount: 12},
@@ -66,19 +66,24 @@ let state:AppType = {
 
 
 }
- export let addPost = (postMessage:string) => {
-    let newPost:PostDataType = {
+
+export let addPost = (postText:string) => {
+    let newPost: PostDataType = {
         id: 5,
-        message: postMessage,
+        message: postText,
         likesCount: 0
     }
     state.profilePage.postData.push(newPost)
-     state.profilePage.newPostText='';
-     rerenderEntireTree(state)
-}
-
-export let updateNewPostText = (newText:string) => {
-    state.profilePage.newPostText=newText
+    state.profilePage.newPostText=''
     rerenderEntireTree(state)
 }
+
+export let updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
+}
+export const subscribe=(observer:(state:AppType)=>void)=>{
+    rerenderEntireTree=observer
+}
 export default state
+

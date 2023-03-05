@@ -5,23 +5,20 @@ import {profilePageType} from "../../../redux/state";
 
 
 type myPostsType = {
-    profilePage:profilePageType
-    addPost:(postMessage:string)=>void
-    newPostText:string
-    updateNewPostText:(newText:string)=>void
+    profilePage: profilePageType
+    addPost: (postText:string) => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
 function MyPosts(props: myPostsType) {
 
     let postElement = props.profilePage.postData.map(el => <Post message={el.message} likesCount={el.likesCount}/>)
 
-    let addPost=()=>{
-            props.addPost(props.newPostText)
-
-
-
+    let addPost = () => {
+        props.addPost(props.newPostText)
     }
-    const onPostChange=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewPostText(e.currentTarget.value)
 
     }
@@ -30,10 +27,10 @@ function MyPosts(props: myPostsType) {
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <textarea value={props.newPostText} onKeyDown={(e)=>{if (e.key==='Enter'){
-                    props.addPost(props.newPostText)}
+                <textarea value={props.newPostText}
+                          onChange={onPostChange}>
 
-                }} onChange={onPostChange}></textarea><br/>
+                </textarea><br/>
                 <button onClick={addPost}>Add post</button>
             </div>
             <div className={s.posts}>

@@ -1,12 +1,13 @@
-import state from "./redux/state";
+import state, {AppType} from "./redux/state";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import {addPost, updateNewPostText} from "./redux/state";
 import React from "react";
 import './index.css'
+import {subscribe} from "./redux/state";
 
-const rerenderEntireTree=()=>{
+const rerenderEntireTree=(state:AppType)=>{
 
     ReactDOM.render(
         <BrowserRouter>
@@ -16,5 +17,5 @@ const rerenderEntireTree=()=>{
     );}
 
 
-
-rerenderEntireTree()
+subscribe(rerenderEntireTree)
+rerenderEntireTree(state)

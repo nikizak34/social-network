@@ -5,14 +5,14 @@ import Header from "./components/Header/Header";
 import Profile from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {AppType, updateNewPostText} from "./redux/state";
+import {AppType} from "./redux/state";
 
 
 
 
 type fokeorktype={
     state:AppType
-    addPost:(postMessage:string)=>void
+    addPost:(postText: string)=>void
     updateNewPostText: (newText:string)=>void
 
 }
