@@ -36,13 +36,21 @@ export type DialogType = {
 export type StoreType={
     _state:AppType
     getState:()=>AppType
-    _rerenderEntireTree:(state:AppType)=>void
-    addPost:(postText:string)=>void
-    updateNewPostText:(newText: string)=>void
+    _callSubscriber:(state:AppType)=>void
     subscribe:(observer:(state:AppType)=>void)=>void
+    dispatch:(action:ActionsTypes)=>void
+
 
 }
+export type ActionsTypes =AddPostActionType| ChangePostActionType
+type AddPostActionType={
+    type:'ADD-POST'
 
+}
+type ChangePostActionType={
+    type:'UPDATE-NEW-POST-TEXT'
+    newText:string
+}
 
  const store:StoreType ={
      _state: {
@@ -79,26 +87,29 @@ export type StoreType={
      getState () {
          return this._state;
      },
-    _rerenderEntireTree (state: AppType){
-    },
-     addPost(postText:string) {
-        let newPost: PostDataType = {
-            id: 5,
-            message: postText,
-            likesCount: 0
-        }
-        this._state.profilePage.postData.push(newPost)
-        this._state.profilePage.newPostText=''
-        this._rerenderEntireTree(this._state)
-    },
-     updateNewPostText (newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._rerenderEntireTree(this._state)
+    _callSubscriber (state: AppType){
     },
 
      subscribe(observer){
-        this._rerenderEntireTree=observer
-    }
+        this._callSubscriber=observer
+    },
+     dispatch(action){
+         if(action.type==='ADD-POST'){
+             let newPost: PostDataType = {
+                 id: 5,
+                 message: this._state.profilePage.newPostText,
+                 likesCount: 0
+             }
+             this._state.profilePage.postData.push(newPost)
+             this._state.profilePage.newPostText=''
+             this._callSubscriber(this._state)
+
+         }else if (action.type==='UPDATE-NEW-POST-TEXT'){
+             this._state.profilePage.newPostText = action.newText
+             this._callSubscriber(this._state)
+
+         }
+     },
 
 
 }

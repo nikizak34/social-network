@@ -5,18 +5,17 @@ import Header from "./components/Header/Header";
 import Profile from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {AppType} from "./redux/state";
+import {ActionsTypes, AppType} from "./redux/state";
 
 
 
 
 type AllType={
     state:AppType
-    addPost:(postText: string)=>void
-    updateNewPostText: (newText:string)=>void
+    dispatch:(action:ActionsTypes)=>void
 
 }
-function App(props: AllType) {
+const App:React.FC<AllType>=(props)=> {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -29,8 +28,8 @@ function App(props: AllType) {
                                render={() => <Dialogs messages={props.state.dialogsPage.messages}
                                                       dialogs={props.state.dialogsPage.dialogs}/>}/>
                         <Route path='/profile' render={() => <Profile profilePage={props.state.profilePage}
-                                                                      addPost={props.addPost}
-                                                                      updateNewPostText={props.updateNewPostText}
+                                                                      dispatch={props.dispatch}
+
 
                         />}/>
 
