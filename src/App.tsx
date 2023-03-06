@@ -10,13 +10,13 @@ import {AppType} from "./redux/state";
 
 
 
-type fokeorktype={
+type AllType={
     state:AppType
     addPost:(postText: string)=>void
     updateNewPostText: (newText:string)=>void
 
 }
-function App(props: fokeorktype) {
+function App(props: AllType) {
     return (
         <BrowserRouter>
             <div className="app-wrapper">

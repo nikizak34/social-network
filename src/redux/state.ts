@@ -1,6 +1,3 @@
-let rerenderEntireTree = (state: AppType) => {
-
-}
 
 export type AppType = {
     dialogsPage: dialogsPageType
@@ -35,7 +32,20 @@ export type DialogType = {
     id: number
 
 }
-let state: AppType = {
+
+export type StoreType={
+    _state:AppType
+    getState:()=>AppType
+    _rerenderEntireTree:(state:AppType)=>void
+    addPost:(postText:string)=>void
+    updateNewPostText:(newText: string)=>void
+    subscribe:(observer:(state:AppType)=>void)=>void
+
+}
+
+
+ const store:StoreType ={
+     _state: {
     profilePage: {
         postData: [
             {id: 1, message: 'Hi, how are you?', likesCount: 12},
@@ -65,25 +75,42 @@ let state: AppType = {
     }
 
 
-}
+},
+     getState () {
+         return this._state;
+     },
+    _rerenderEntireTree (state: AppType){
+    },
+     addPost(postText:string) {
+        let newPost: PostDataType = {
+            id: 5,
+            message: postText,
+            likesCount: 0
+        }
+        this._state.profilePage.postData.push(newPost)
+        this._state.profilePage.newPostText=''
+        this._rerenderEntireTree(this._state)
+    },
+     updateNewPostText (newText: string) {
+        this._state.profilePage.newPostText = newText
+        this._rerenderEntireTree(this._state)
+    },
 
-export let addPost = (postText:string) => {
-    let newPost: PostDataType = {
-        id: 5,
-        message: postText,
-        likesCount: 0
+     subscribe(observer){
+        this._rerenderEntireTree=observer
     }
-    state.profilePage.postData.push(newPost)
-    state.profilePage.newPostText=''
-    rerenderEntireTree(state)
+
+
 }
 
-export let updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText
-    rerenderEntireTree(state)
-}
-export const subscribe=(observer:(state:AppType)=>void)=>{
-    rerenderEntireTree=observer
-}
-export default state
+
+
+
+
+
+
+
+
+
+export default store
 
