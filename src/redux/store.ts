@@ -1,40 +1,41 @@
-import {addPostActionCreator, profileReducer, updateNewPostActionCreator} from "./profileReducer";
-import {dialogReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./dialogReducer";
-import {sidebarReducer} from "./sidebarReducer";
+import {addPostActionCreator,  updateNewPostActionCreator} from "./profileReducer";
+import { sendMessageCreator, updateNewMessageBodyCreator} from "./dialogReducer";
 
-export type AppType = {
+
+ type AppType = {
     dialogsPage: dialogsPageType
     profilePage: profilePageType
     sidebar:{}
+
 }
-export type dialogsPageType = {
+ type dialogsPageType = {
     messages: Array<MessageType>
     dialogs: Array<DialogType>
     newMessageBody:string
 }
 
-export type profilePageType = {
+type profilePageType = {
     postData: Array<PostDataType>
     newPostText: string
 }
 
 
-export type  PostDataType = {
+ type  PostDataType = {
     id: number
     message: string
     likesCount: number
 }
-export type MessageType = {
+ type MessageType = {
     message: string
     id: number
 }
 
-export type DialogType = {
+ type DialogType = {
     name: string
     id: number
 }
 
-export type StoreType={
+ type StoreType={
     _state:AppType
     getState:()=>AppType
     _callSubscriber:(state:AppType)=>void
@@ -43,14 +44,14 @@ export type StoreType={
 }
 
 
-export type ActionsTypes =
+ type ActionsTypes =
     ReturnType<typeof addPostActionCreator> |
     ReturnType<typeof updateNewPostActionCreator>|
     ReturnType<typeof sendMessageCreator> |
     ReturnType<typeof updateNewMessageBodyCreator >
 
 
- const store:StoreType ={
+/* const store:StoreType ={
      _state: {
     profilePage: {
         postData: [
@@ -104,7 +105,7 @@ export type ActionsTypes =
 
 
 
-}
+}*/
 
 
 
@@ -117,6 +118,6 @@ export type ActionsTypes =
 
 
 
-
-export default store
+/*
+export default store*/
 
