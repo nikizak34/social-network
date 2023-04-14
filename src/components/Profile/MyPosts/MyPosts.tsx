@@ -9,7 +9,7 @@ import {PostPropsType} from "./MyPostsContainer";
 
 function MyPosts(props: PostPropsType) {
 
-    let postElement = props.posts.postData.map(el => <Post message={el.message} likesCount={el.likesCount}/>)
+    let postElement = props.posts.postData.map(el => <Post key={el.id} message={el.message} likesCount={el.likesCount}/>)
 
     let addPost = () => {
         props.addPost()
