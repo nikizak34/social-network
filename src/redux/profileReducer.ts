@@ -1,3 +1,6 @@
+import { userApi} from "../api/api";
+import {followSuccess, toggleFollowingProgress} from "./usersReducer";
+
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -96,4 +99,14 @@ export const updateNewPostActionCreator = (text: string) => {
 }
 export const setUserProfile = (profile: GetProfileResponseType) => {
     return {type: SET_USER_PROFILE, profile} as const
+}
+
+
+export const profileThunk=(userId:string)=> {
+    return (dispatch:any) => {
+        userApi.getProfile(userId)
+            .then(response => {
+               dispatch(setUserProfile(response.data))
+            })
+    }
 }

@@ -10,6 +10,8 @@ import {GetProfileResponseType} from "../../redux/profileReducer";
 
 type ProfileType={
     profile:GetProfileResponseType
+
+
 }
 
 function Profile(props:ProfileType) {

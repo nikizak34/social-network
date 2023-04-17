@@ -9,6 +9,31 @@ const instance=axios.create({
     },
 })
 
-export const getUsers=(currentPage:number=1,pageSize:number=10)=>{
-   return  instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response=>response.data)
+
+export const userApi={
+    getUsers(currentPage:number=1,pageSize:number=10){
+        return  instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response=>response.data)
+    },
+
+    follow(userId:number){
+        return  instance.post(`follow/${userId}`)
+    },
+    unFollow(userId:number){
+        return  instance.delete(`follow/${userId}`)
+    },
+    getProfile(userId:string){
+        return   instance.get(`profile/` + userId)
+    },
+
+
 }
+
+export const authApi={
+
+me(){
+    return  instance.get(`auth/me`,)}
+
+}
+
+
+
