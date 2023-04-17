@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3c70e964.css",
+    "main.js": "/static/js/main.ae415dab.js",
+    "static/media/JointRevolvingAntelopegroundsquirrel-size_restricted.gif": "/static/media/JointRevolvingAntelopegroundsquirrel-size_restricted.8427c5628e8fe63d36e5.gif",
+    "static/media/1200px-User_font_awesome.svg.png": "/static/media/1200px-User_font_awesome.svg.58de24df3414300daa62.png",
+    "index.html": "/index.html",
+    "main.3c70e964.css.map": "/static/css/main.3c70e964.css.map",
+    "main.ae415dab.js.map": "/static/js/main.ae415dab.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3c70e964.css",
+    "static/js/main.ae415dab.js"
+  ]
+}
