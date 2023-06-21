@@ -1,5 +1,5 @@
-import {addPostActionCreator,  updateNewPostActionCreator} from "./profileReducer";
-import { sendMessageCreator, updateNewMessageBodyCreator} from "./dialogReducer";
+import {addPostActionCreator} from "./profileReducer";
+import { sendMessageCreator} from "./dialogReducer";
 
 
  type AppType = {
@@ -46,9 +46,8 @@ type profilePageType = {
 
  type ActionsTypes =
     ReturnType<typeof addPostActionCreator> |
-    ReturnType<typeof updateNewPostActionCreator>|
-    ReturnType<typeof sendMessageCreator> |
-    ReturnType<typeof updateNewMessageBodyCreator >
+    ReturnType<typeof sendMessageCreator>
+
 
 
 /* const store:StoreType ={

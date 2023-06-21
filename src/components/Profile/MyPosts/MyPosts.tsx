@@ -2,34 +2,24 @@ import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
 import {PostPropsType} from "./MyPostsContainer";
-
-
-
+import {PostFormDataType, PostReduxForm} from "./Post/MyPostForm";
 
 
 function MyPosts(props: PostPropsType) {
 
-    let postElement = props.posts.postData.map(el => <Post key={el.id} message={el.message} likesCount={el.likesCount}/>)
+    let postElement = props.posts.postData.map(el => <Post key={el.id} message={el.message}
+                                                           likesCount={el.likesCount}/>)
 
-    let addPost = () => {
-        props.addPost()
-    }
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let text = e.currentTarget.value
-        props.onPostChange(text)
+    let onAddPost = (values:PostFormDataType) => {
+        props.addPost(values.newPostText)
 
     }
+
     return (
 
         <div className={s.postsBlock}>
             <h3>My posts</h3>
-            <div>
-                <textarea value={props.newPostText.newPostText}
-                          onChange={onPostChange}>
-
-                </textarea><br/>
-                <button onClick={addPost}>Add post</button>
-            </div>
+            <PostReduxForm onSubmit={onAddPost}/>
             <div className={s.posts}>
 
                 {postElement}

@@ -3,23 +3,22 @@ import {
 
     InitialStateType,
     sendMessageCreator,
-    updateNewMessageBodyCreator
 } from "../../redux/dialogReducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {FormDataType} from "./Message/DialogsForm";
 
 
 type MapStateToPropsType={
     dialogsPage:InitialStateType
-    isAuth:boolean
-
 
 }
 
 type MapDispatchToProps={
-    onSendMessageClick: () => void
+    onSendMessageClick: (values:FormDataType) => void
     onNewMessageChange: (body: string) => void
 }
 
@@ -29,24 +28,26 @@ export type DialogPropsType=MapDispatchToProps&MapStateToPropsType
 let mapStateToProps=(state:AppStateType)=>{
     return{
         dialogsPage: state.dialogsPage,
-        isAuth:state.auth.isAuth
+
     }
 }
 
 let mapDispatchToProps=(dispatch:Dispatch)=>{
     return{
-        onNewMessageChange:(body:string)=>{
-            dispatch(updateNewMessageBodyCreator(body))
-        },
-        onSendMessageClick:()=>{
-            dispatch(sendMessageCreator())
+        onSendMessageClick:(newMessageBody:string)=>{
+            dispatch(sendMessageCreator(newMessageBody))
         }
 
 
     }
 }
 
-export const DialogsContainer=connect(mapStateToProps,mapDispatchToProps)(Dialogs);
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps,mapDispatchToProps),
+    WithAuthRedirect
+)(Dialogs)
+
 
 
 

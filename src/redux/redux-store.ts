@@ -4,19 +4,20 @@ import {dialogReducer} from "./dialogReducer";
 import {sidebarReducer} from "./sidebarReducer";
 import {userReducer} from "./usersReducer";
 import {authReducer} from "./auth-reducer";
-import  thunkMiddleware from 'redux-thunk'
+import  thunkMiddleware from 'redux-thunk';
+import {reducer as formReducer} from "redux-form";
 
 
-
-let reducers=combineReducers({
+let reducer=combineReducers({
     profilePage:profileReducer,
     dialogsPage: dialogReducer,
     sidebar:sidebarReducer,
     usersPage:userReducer,
-    auth:authReducer
+    auth:authReducer,
+    form:formReducer
 })
 
-export type AppStateType=ReturnType<typeof reducers>
-export const store=createStore(reducers,applyMiddleware(thunkMiddleware));
+export type AppStateType=ReturnType<typeof reducer>
+export const store=createStore(reducer,applyMiddleware(thunkMiddleware));
 
 

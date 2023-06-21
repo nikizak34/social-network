@@ -2,8 +2,10 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {GetProfileResponseType, profileThunk, } from "../../redux/profileReducer";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {GetProfileResponseType, getStatus, profileThunk, updateStatus,} from "../../redux/profileReducer";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 
@@ -20,12 +22,12 @@ class ProfileContainer extends React.Component<CommonPropsType> {
             userId='2'
         }
        this.props.profileThunk(userId)
+        this.props.getStatus(userId)
     }
 
     render(){
-        if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={updateStatus}/>
         );
     }
 
@@ -33,27 +35,41 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 
 
 
+
+
 export type ProfilePropsType=MapStateToPropsType & MapDispatchToPropsType
 
 type MapStateToPropsType={
     profile:GetProfileResponseType
+    status:string
+    authorizedUserId:string|null
     isAuth:boolean
 }
+
 type MapDispatchToPropsType={
-    profileThunk:(userId: string)=>void
+    profileThunk:(userId: string)=>void,
+    getStatus:(userId:string)=>void
+    updateStatus:(status:string)=>void
+
 }
 
 const mapStateToProps=(state:AppStateType):MapStateToPropsType=>{
     return {
         profile:state.profilePage.profile,
+        status:state.profilePage.status,
+        authorizedUserId:state.auth.userId,
         isAuth:state.auth.isAuth
-
     }
-
 }
 
-const WithUrlDataContainerComponent= withRouter(ProfileContainer);
-export default connect(mapStateToProps,{profileThunk})(WithUrlDataContainerComponent)
+
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps,{profileThunk,getStatus,updateStatus}),
+    withRouter,
+    WithAuthRedirect
+)(ProfileContainer)
+
 
 
 

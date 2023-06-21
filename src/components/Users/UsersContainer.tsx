@@ -33,6 +33,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
+
 /*let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         follow: (userId: number) => {

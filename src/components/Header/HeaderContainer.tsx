@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from "./Header";
 import {connect} from "react-redux";
-import {authThunk} from "../../redux/auth-reducer";
+import {authThunk, logOut} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 
 
@@ -11,8 +11,9 @@ import {AppStateType} from "../../redux/redux-store";
     }
 
     render() {
+
         return (
-            <Header {...this.props}/>
+            <Header {...this.props} />
         );
     }
 }
@@ -28,6 +29,7 @@ type mapStateToPropsType={
 }
 type mapDispatchToPropsType={
     authThunk:()=>void
+    logOut:()=>any
 }
 const mapStateToProps=(state:AppStateType)=>{
      return{
@@ -35,6 +37,6 @@ const mapStateToProps=(state:AppStateType)=>{
          login:state.auth.login
      }
 }
-export default connect(mapStateToProps,{authThunk})(HeaderContainer)
+export default connect(mapStateToProps,{authThunk,logOut})(HeaderContainer)
 
 

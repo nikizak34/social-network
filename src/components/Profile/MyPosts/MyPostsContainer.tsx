@@ -1,5 +1,5 @@
 import React from 'react';
-import {addPostActionCreator, InitialStateProfileType, updateNewPostActionCreator} from "../../../redux/profileReducer";
+import {addPostActionCreator, InitialStateProfileType} from "../../../redux/profileReducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
@@ -15,8 +15,8 @@ type MapStateToPropsType={
 }
 
 type MapDispatchToPropsType={
-    addPost:()=>void
-    onPostChange:(text:string)=>void
+    addPost:(newPostText:string)=>void
+
 }
 
 export type PostPropsType=MapStateToPropsType & MapDispatchToPropsType
@@ -31,12 +31,10 @@ let mapStateToProps=(state:AppStateType)=>{
 
 let mapDispatchToProps=(dispatch:Dispatch)=>{
     return{
-        addPost:()=>{
-            dispatch(addPostActionCreator())
+        addPost:(newPostText:string)=>{
+            dispatch(addPostActionCreator(newPostText))
         },
-        onPostChange:(text:string)=>{
-            dispatch(updateNewPostActionCreator(text))
-        }
+
 
 
     }
