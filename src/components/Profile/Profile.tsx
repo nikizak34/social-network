@@ -12,6 +12,7 @@ type ProfileType={
     profile:GetProfileResponseType
     status:string
     updateStatus:(status:string)=>void
+
 }
 
 function Profile(props:ProfileType) {

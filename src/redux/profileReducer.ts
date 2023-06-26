@@ -107,6 +107,7 @@ export const profileThunk = (userId: string) => {
     return (dispatch: any) => {
         userApi.getProfile(userId)
             .then(response => {
+
                 dispatch(setUserProfile(response.data))
             })
     }
@@ -127,6 +128,7 @@ export const updateStatus = (status: string) => {
     return (dispatch: any) => {
         profileApi.updateStatus(status)
             .then(response => {
+                debugger
                 if(response.data.resultCode===0){
                     dispatch(setStatus(status))
                 }

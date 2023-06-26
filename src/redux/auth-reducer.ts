@@ -1,5 +1,7 @@
 import {authApi} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {Dispatch} from "redux";
+import {initializedSuccess} from "./app-reducer";
 
 
 const SET_USER_DATA = 'SET_USER_DATA'
@@ -43,8 +45,8 @@ export const setUserData = (userId: string | null, email: string | null, login: 
 }
 
 export const authThunk = () => {
-    return (dispatch: any) => {
-        authApi.me()
+    return (dispatch: Dispatch) => {
+      return   authApi.me()
             .then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, login, email} = response.data.data
@@ -65,9 +67,9 @@ export const login = (email: string, password: string, rememberMe: boolean) => (
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(authThunk())
-            }else {
-              let res=  response.data.messages.length>0?response.data.messages[0]:'Some error'
-                dispatch(stopSubmit('login',{_error:res}))
+            } else {
+                let res = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+                dispatch(stopSubmit('login', {_error: res}))
             }
         })
 }

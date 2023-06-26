@@ -8,6 +8,14 @@ import {
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUserCount,
+    getUsers
+} from "../../redux/users-selectors";
 
 
 export type MapStateToPropsType = initialStateType
@@ -20,7 +28,7 @@ type MapDispatchToPropsType = {
 }
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+/*let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
@@ -28,6 +36,20 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         users: state.usersPage.users,
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress
+
+
+    }
+}*/
+
+
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        pageSize: getPageSize(state),
+        totalUsersCount:getTotalUserCount(state),
+        currentPage: getCurrentPage(state),
+        users: getUsers(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
 
 
     }

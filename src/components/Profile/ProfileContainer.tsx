@@ -10,7 +10,7 @@ import {compose} from "redux";
 
 
 type PathParamsType = {
-    userId: string,
+    userId: string
 
 }
 type CommonPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
@@ -19,7 +19,10 @@ class ProfileContainer extends React.Component<CommonPropsType> {
     componentDidMount() {
         let userId=this.props.match.params.userId
         if(!userId){
-            userId='2'
+            userId= this.props.authorizedUserId!
+            if (!userId){
+                this.props.history.push('/login')
+            }
         }
        this.props.profileThunk(userId)
         this.props.getStatus(userId)
@@ -27,7 +30,7 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 
     render(){
         return (
-            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={updateStatus}/>
+            <Profile {...this.props}/>
         );
     }
 
