@@ -1,14 +1,16 @@
 import {profileApi, userApi} from "../api/api";
-const ADD_POST = 'ADD-POST'
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
+import {Dispatch} from "redux";
+
+const ADD_POST = 'profile/ADD-POST'
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
 
 
-type  PostDataType = {
+export type  PostDataType = {
     id: number
     message: string
     likesCount: number
 }
-type ContactsType = {
+export type ContactsType = {
     facebook: string
     website: string
     vk: string
@@ -19,7 +21,7 @@ type ContactsType = {
     mainLink: string
 }
 
-type PhotoType = {
+export type PhotoType = {
     small: string | undefined
     large: string | undefined
 }
@@ -41,7 +43,9 @@ const initialState = {
 
     ] as PostDataType[],
     profile: {} as GetProfileResponseType,
-    status: ''
+    status: '' as string,
+    newPostText: '' as string,
+
 
 }
 export type InitialStateProfileType = typeof initialState
@@ -67,10 +71,16 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
                 profile: action.profile
             };
         }
-        case 'SET-STATUS': {
+        case 'profile/SET-STATUS': {
             return {
                 ...state,
                 status: action.status
+            };
+        }
+        case 'profile/SAVE-PHOTO': {
+            return {
+                ...state,
+                profile:{...state.profile,photos:action.photo}
             };
         }
         default:
@@ -84,55 +94,51 @@ type TsarPropsType =
     AddPostActionCreatorType
     | SetUserProfileACType
     | SetStatusACType
+    | SavePhotoSuccessAC
 
 type AddPostActionCreatorType = ReturnType<typeof addPostActionCreator>
-
 type SetUserProfileACType = ReturnType<typeof setUserProfile>
 type SetStatusACType = ReturnType<typeof setStatus>
+type SavePhotoSuccessAC = ReturnType<typeof savePhotoSuccess>
 
 
-export let addPostActionCreator = (newPostText:string) => {
-    return {type: 'ADD-POST', newPostText} as const
+export let addPostActionCreator = (newPostText: string) => {
+    return {type: ADD_POST, newPostText} as const
 }
 export const setUserProfile = (profile: GetProfileResponseType) => {
     return {type: SET_USER_PROFILE, profile} as const
 }
 
 export const setStatus = (status: string) => {
-    return {type: 'SET-STATUS', status} as const
+    return {type: 'profile/SET-STATUS', status} as const
+}
+export const savePhotoSuccess = (photo: PhotoType) => {
+    return {type: 'profile/SAVE-PHOTO', photo} as const
 }
 
 
-export const profileThunk = (userId: string) => {
-    return (dispatch: any) => {
-        userApi.getProfile(userId)
-            .then(response => {
 
-                dispatch(setUserProfile(response.data))
-            })
+export const profileThunk = (userId: string) => async (dispatch: Dispatch) => {
+    let response = await userApi.getProfile(userId)
+    dispatch(setUserProfile(response.data))
+}
+
+
+export const getStatus = (userId: string) => async (dispatch: Dispatch) => {
+    let response = await profileApi.getStatus(userId)
+    dispatch(setStatus(response.data))
+}
+
+
+export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    const res = await profileApi.updateStatus(status)
+    if (res.data.resultCode === 0) {
+        dispatch(setStatus(status))
     }
 }
-
-
-export const getStatus = (userId: string) => {
-    return (dispatch: any) => {
-        profileApi.getStatus(userId)
-            .then(response => {
-                dispatch(setStatus(response.data))
-            })
-    }
-}
-
-
-export const updateStatus = (status: string) => {
-    return (dispatch: any) => {
-        profileApi.updateStatus(status)
-            .then(response => {
-                debugger
-                if(response.data.resultCode===0){
-                    dispatch(setStatus(status))
-                }
-
-            })
+export const savePhoto = (photo: File) => async (dispatch: Dispatch) => {
+    const res = await profileApi.updatePhoto(photo)
+    if (res.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(res.data.data.photos))
     }
 }

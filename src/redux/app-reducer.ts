@@ -1,6 +1,6 @@
-import {authThunk} from "../redux/auth-reducer";
+import {authThunk} from "./auth-reducer";
 
-const SET_INITIALIZED = 'SET_INITIALIZED'
+const SET_INITIALIZED = 'app/SET_INITIALIZED'
 
 const initialState = {
     initialized: false
@@ -29,10 +29,10 @@ export const initializedSuccess = () => {
     return {type: SET_INITIALIZED} as const
 }
 
-export const initializeApp = () => (dispatch:any) => {
-    let promise= dispatch(authThunk())
-        Promise.all([promise])
-        .then(()=>{
+export const initializeApp = () => (dispatch: any) => {
+    let promise = dispatch(authThunk())
+    Promise.all([promise])
+        .then(() => {
             dispatch(initializedSuccess())
         })
 

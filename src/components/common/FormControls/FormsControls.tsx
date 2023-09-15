@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './FormsControls.module.css'
 
 
-// @ts-ignore
-export const Textarea = ({input,meta,...props}) => {
+
+export const Textarea:FC<any> = ({input,meta,...props}) => {
 const hasError=meta.touched&&meta.error
     return (
         <div>
@@ -17,8 +17,8 @@ const hasError=meta.touched&&meta.error
 };
 
 
-// @ts-ignore
-export const Input = ({input,meta,...props}) => {
+
+export const Input:FC<any> = ({input,meta,...props}) => {
     const hasError=meta.touched&&meta.error
     return (
         <div>

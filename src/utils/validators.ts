@@ -8,8 +8,4 @@ export const maxLengthCreator=(maxLength:number)=> (value:[])=>{
         return undefined
     }
 
-/*
-export const maxLength=(value:[])=>{
-    if (value&& value.length>30) return 'Max length is 30 symbols'
-    return undefined
-}*/
+

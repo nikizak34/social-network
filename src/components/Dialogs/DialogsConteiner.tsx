@@ -1,15 +1,10 @@
 import React from "react";
-import {
-
-    InitialStateType,
-    sendMessageCreator,
-} from "../../redux/dialogReducer";
+import {InitialStateType, sendMessageCreator,} from "../../redux/dialogReducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
-import {FormDataType} from "./Message/DialogsForm";
 
 
 type MapStateToPropsType={
@@ -18,7 +13,7 @@ type MapStateToPropsType={
 }
 
 type MapDispatchToProps={
-    onSendMessageClick: (values:FormDataType) => void
+    onSendMessageClick: (values:string) => void
     onNewMessageChange: (body: string) => void
 }
 
@@ -36,6 +31,7 @@ let mapDispatchToProps=(dispatch:Dispatch)=>{
     return{
         onSendMessageClick:(newMessageBody:string)=>{
             dispatch(sendMessageCreator(newMessageBody))
+
         }
 
 
@@ -52,28 +48,4 @@ export default compose<React.ComponentType>(
 
 
 
-/*type DialogsType = {
-    store:StoreType
-}
-export const DialogsContainer = (props: DialogsType) => {
 
-    let state=props.store.getState().dialogsPage;
-
-    const onSendMessageClick=()=>{
-        props.store.dispatch(sendMessageCreator())
-    }
-    const onNewMessageChange=(body:string)=>{
-        props.store.dispatch(updateNewMessageBodyCreator(body))
-
-    }
-
-
-
-    return <Dialogs dialogsPage={state}
-                    onSendMessageClick={onSendMessageClick}
-                    onNewMessageChange={onNewMessageChange}
-
-    />
-
-
-}*/

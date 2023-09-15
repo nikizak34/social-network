@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Redirect, Route, withRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsConteiner";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -14,12 +14,11 @@ import {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 
 
-
 type HeaderPropsType = mapDispatchToPropsType
 
 type mapDispatchToPropsType = {
     initializeApp: () => void
-    initialized:boolean
+    initialized: boolean
 
 }
 
@@ -29,11 +28,11 @@ class App extends React.Component<HeaderPropsType> {
     }
 
     render() {
-        if (!this.props.initialized){
+        if (!this.props.initialized) {
             return <Preloader/>
         }
         return (
-            <BrowserRouter>
+            <HashRouter >
                 <div className="app-wrapper">
                     <HeaderContainer/>
                     <div className="flex-00">
@@ -49,24 +48,24 @@ class App extends React.Component<HeaderPropsType> {
 
                             <Route path='/login' render={() => <Login/>}/>
 
+                            <Redirect from='*' to='/profile/'/>
+
                         </div>
 
                     </div>
 
                 </div>
 
-            </BrowserRouter>
+            </HashRouter>
 
         );
     }
 }
 
 
-
-
-const mapStateToProps = (state: AppStateType):InitialAuthStateType => {
-    return{
-        initialized:state.app.initialized
+const mapStateToProps = (state: AppStateType): InitialAuthStateType => {
+    return {
+        initialized: state.app.initialized
     }
 
 }

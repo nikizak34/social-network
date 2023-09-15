@@ -6,7 +6,7 @@ import {userReducer} from "./usersReducer";
 import {authReducer} from "./auth-reducer";
 import  thunkMiddleware from 'redux-thunk';
 import {reducer as formReducer} from "redux-form";
-import {appReducer} from "../redux/app-reducer";
+import {appReducer} from "./app-reducer";
 
 
 let reducer=combineReducers({

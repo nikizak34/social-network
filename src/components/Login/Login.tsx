@@ -15,10 +15,10 @@ type FormDataType = {
     rememberMe: boolean
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit,error}) => {
     return (
 
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field placeholder={'Login'} name={'login'} component={Input}
                        validate={[required]}
@@ -32,8 +32,8 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
             <div>
                 <Field type="checkbox" name={'rememberMe'} component={Input}/><span></span> remember me
             </div>
-            {props.error && <div className={s.summaryError}>
-                {props.error}
+            {error && <div className={s.summaryError}>
+                {error}
             </div>
             }
             <div>
@@ -45,8 +45,11 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-
-const Login = (props: any) => {
+type LoginProps={
+    isAuth:boolean
+    login:(email: string, password: string, rememberMe: boolean)=>void
+}
+const Login = (props: LoginProps) => {
     const onSubmit = (formData: FormDataType) => {
         props.login(formData.login, formData.password, formData.rememberMe)
     }

@@ -1,8 +1,13 @@
-.descriptionBlock{
+.descriptionBlock {
     padding: 10px;
 
 }
 
-.image{
-height: 200px;
+.image {
+ max-width: 200px;
+}
+
+
+.contact{
+    padding-left: 10px;
 }

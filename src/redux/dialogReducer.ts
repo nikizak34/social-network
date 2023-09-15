@@ -1,5 +1,4 @@
-
-const SEND_MESSAGE = 'SEND_MESSAGE'
+const SEND_MESSAGE = 'dialog/SEND_MESSAGE'
 
 
 export type MessageType = {
@@ -32,15 +31,14 @@ const initialState = {
 
 }
 
-export type InitialStateType=typeof initialState
+export type InitialStateType = typeof initialState
 export const dialogReducer = (state: InitialStateType = initialState, action: TsarPropsType): InitialStateType => {
     switch (action.type) {
         case SEND_MESSAGE:
             let body = action.newMessageBody
-
-            return   {
+            return {
                 ...state,
-                messages:[...state.messages,{id: 6, message: body}]
+                messages: [...state.messages, {id: 6, message: body}]
             };
         default:
             return state
@@ -48,12 +46,12 @@ export const dialogReducer = (state: InitialStateType = initialState, action: Ts
 }
 
 
-type TsarPropsType=SendMessageCreatorType
-type SendMessageCreatorType=ReturnType<typeof sendMessageCreator>
+type TsarPropsType = SendMessageCreatorType
+type SendMessageCreatorType = ReturnType<typeof sendMessageCreator>
 
-export let sendMessageCreator = (newMessageBody:string) => {
+export let sendMessageCreator = (newMessageBody: string) => {
     return {
-        type: 'SEND_MESSAGE',
+        type: SEND_MESSAGE,
         newMessageBody
     } as const
 }
