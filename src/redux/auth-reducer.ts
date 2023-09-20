@@ -1,6 +1,8 @@
-import {authApi} from "../api/api";
+import {authApi, securityApi} from "../api/api";
 import {stopSubmit} from "redux-form";
-import {Dispatch} from "redux";
+import {AnyAction, Dispatch} from "redux";
+import {ThunkDispatch} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 
 const SET_USER_DATA = 'auth/SET_USER_DATA'
@@ -9,14 +11,16 @@ type InitialAuthStateType = {
     userId: null | string,
     email: null | string,
     login: null | string,
-    isAuth: boolean
+    isAuth: boolean,
+    captchaUrl: null | string,
 }
 
 const initialState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    captchaUrl: null as string|null
 }
 
 
@@ -25,9 +29,17 @@ export const authReducer = (state: InitialAuthStateType = initialState, action: 
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data
-            };
+                userId: action.data.userId,
+                email: action.data.email,
+                login: action.data.login,
+                isAuth: action.data.isAuth,
 
+            };
+        case 'auth/GET-CAPTCHA-URL-SUCCESS':
+            return {
+                ...state,
+                captchaUrl: action.captchaURL
+            };
         default:
             return state
     }
@@ -35,11 +47,15 @@ export const authReducer = (state: InitialAuthStateType = initialState, action: 
 }
 
 
-type TsarPropsType2 = SetUserDataType
+type TsarPropsType2 = SetUserDataType|getCaptchaUrlSuccessAC
 
 type SetUserDataType = ReturnType<typeof setUserData>
+type getCaptchaUrlSuccessAC = ReturnType<typeof getCaptchaUrlSuccess>
 export const setUserData = (userId: string | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {type: SET_USER_DATA, data: {userId, email, login, isAuth}} as const
+}
+export const getCaptchaUrlSuccess = (captchaURL:  string | null) => {
+    return {type: 'auth/GET-CAPTCHA-URL-SUCCESS', captchaURL} as const
 }
 
 export const authThunk = () => async (dispatch: Dispatch) => {
@@ -48,21 +64,29 @@ export const authThunk = () => async (dispatch: Dispatch) => {
             if (response.data.resultCode === 0) {
                 let {id, login, email} = response.data.data
                 dispatch(setUserData(id, email, login, true))
+
             }
         })
 }
 
 
-export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean,captcha?:string) => async (dispatch: ThunkDispatch<AppStateType, unknown, AnyAction>) => {
     const data = {
         email,
         password,
-        rememberMe
+        rememberMe,
+        captcha
     }
+
     let response = await authApi.login(data)
+
     if (response.data.resultCode === 0) {
         dispatch(authThunk())
+        dispatch(getCaptchaUrlSuccess(null))
     } else {
+        if (response.data.resultCode === 10) {
+            dispatch(getCaptchaUrl())
+        }
         let res = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
         dispatch(stopSubmit('login', {_error: res}))
     }
@@ -70,8 +94,15 @@ export const login = (email: string, password: string, rememberMe: boolean) => a
 }
 
 
-export const logOut = () => async (dispatch: any) => {
+export const logOut = () => async (dispatch: Dispatch) => {
     const res = await authApi.logOut()
     if (res.data.resultCode === 0) dispatch(setUserData(null, null, null, false))
 }
 
+
+export const getCaptchaUrl = () => async (dispatch: Dispatch) => {
+    const res = await securityApi.getCaptchaUrl()
+    dispatch(getCaptchaUrlSuccess(res.data.url))
+
+
+}

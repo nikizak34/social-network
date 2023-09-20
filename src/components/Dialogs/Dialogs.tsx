@@ -12,7 +12,6 @@ export const Dialogs = (props: DialogPropsType) => {
     let messagesElements = props.dialogsPage.messages.map(el => <Message key={el.id} message={el.message}/>)
 
     let addNewMessage = (values:{newMessageBody:string}) => {
-        debugger
         props.onSendMessageClick(values.newMessageBody)
     }
 

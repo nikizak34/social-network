@@ -1,4 +1,4 @@
-export const required=(value:any)=>{
+export const required=(value:unknown)=>{
     if (value) return undefined
     return 'Field is required'
 }

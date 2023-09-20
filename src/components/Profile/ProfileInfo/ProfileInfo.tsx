@@ -61,8 +61,6 @@ export const ProfileInfo = (props: ProfileInfoType) => {
                     <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={()=>setEditMode(true)}/>}
 
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
-                <div>{props.profile.aboutMe}</div>
-                <div>{props.profile.contacts.instagram}</div>
             </div>
         </div>
 

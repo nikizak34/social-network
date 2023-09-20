@@ -59,6 +59,7 @@ type LoginDataType={
     email:string
     password:string
     rememberMe:boolean
+    captchaURL?:string
 }
 export const authApi = {
 
@@ -66,11 +67,19 @@ export const authApi = {
         return instance.get(`auth/me`,)
     },
     login(data:LoginDataType) {
+
         return instance.post(`auth/login`,data)
     },
     logOut() {
         return instance.delete(`auth/login`)
     }
+}
+
+export const securityApi = {
+    getCaptchaUrl() {
+        return instance.get(`security/get-captcha-url`,)
+    },
+
 }
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {HashRouter, Redirect, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsConteiner";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -32,7 +32,7 @@ class App extends React.Component<HeaderPropsType> {
             return <Preloader/>
         }
         return (
-            <HashRouter >
+            <BrowserRouter >
                 <div className="app-wrapper">
                     <HeaderContainer/>
                     <div className="flex-00">
@@ -48,7 +48,11 @@ class App extends React.Component<HeaderPropsType> {
 
                             <Route path='/login' render={() => <Login/>}/>
 
-                            <Redirect from='*' to='/profile/'/>
+                            <Route path='*' render={() =><div>404 NOT FOUND</div>}/>
+
+                            <Route exact path='/' render={() =><Redirect to={'/profile'}/>}/>
+
+
 
                         </div>
 
@@ -56,7 +60,7 @@ class App extends React.Component<HeaderPropsType> {
 
                 </div>
 
-            </HashRouter>
+            </BrowserRouter>
 
         );
     }
