@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, useState} from "react";
 import s from './ProfileInfo.module.css'
-import {Preloader} from "../../common/Preloader/Preloader";
+import Preloader from "../../common/Preloader/Preloader";
 import {ContactsType, GetProfileResponseType} from "../../../redux/profileReducer";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/1200px-User_font_awesome.svg.png";

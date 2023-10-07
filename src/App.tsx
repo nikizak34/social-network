@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsConteiner";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -11,7 +11,8 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {InitialAuthStateType, initializeApp} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
-import {Preloader} from "./components/common/Preloader/Preloader";
+import {Grid} from "@material-ui/core";
+import Preloader from "./components/common/Preloader/Preloader";
 
 
 type HeaderPropsType = mapDispatchToPropsType
@@ -32,36 +33,38 @@ class App extends React.Component<HeaderPropsType> {
             return <Preloader/>
         }
         return (
-            <BrowserRouter>
-                <div className="app-wrapper">
-                    <HeaderContainer/>
-                    <div className="flex-00">
+
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <Grid container spacing={5} style={{marginTop: "20px", padding: "0 40px 40px"}}>
+                    <Grid item xs={4}>
                         <Navbar/>
-                        <div className='app-wrapper-content'>
-                            <Switch>
-                                <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
-                                <Route path='/dialogs'
-                                       render={() => <DialogsContainer/>}/>
+                    </Grid>
+                    <Grid item xs={8}
+                          style={{padding: "0", display: "flex", justifyContent: "center", marginTop: "20px"}}>
+                        <Switch>
+                            <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
 
-                                <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                            <Route path='/dialogs'
+                                   render={() => <DialogsContainer/>}/>
 
-                                <Route path='/users' render={() => <UsersContainer/>}/>
+                            <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
 
-                                <Route path='/login' render={() => <Login/>}/>
+                            <Route path='/users' render={() => <UsersContainer/>}/>
 
-                                <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
-                            </Switch>
+                            <Route path='/login' render={() => <Login/>}/>
 
+                            <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
 
-                        </div>
+                        </Switch>
+                    </Grid>
 
-                    </div>
+                </Grid>
 
-                </div>
+            </div>
 
-            </BrowserRouter>
+        )
 
-        );
     }
 }
 

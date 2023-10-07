@@ -1,10 +1,19 @@
 import React from 'react';
-import s from "../../Users/Users.module.css";
-import preloader from "../../../assets/images/JointRevolvingAntelopegroundsquirrel-size_restricted.gif";
+import {CircularProgress} from "@material-ui/core";
 
-export const Preloader = () => {
+const Preloader = () => {
     return (
-        <img className={s.img} src={preloader} alt="error"/>
-    );
-};
+        <div style={{width: "100%",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+        }}>
+            <CircularProgress style={{width: "60px", height: "60px"}}/>
+        </div>
+    )
+}
+
+export default Preloader
+
 

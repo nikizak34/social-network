@@ -1,6 +1,15 @@
 
-
-.img{
+.img {
     width: 110px;
-   opacity: 15%;
+    opacity: 15%;
+}
+
+.usersContainer {
+    width: 100%;
+    padding: 30px
+}
+
+.paginatorContainer {
+    float: right;
+    margin-bottom: 20px;
 }

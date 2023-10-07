@@ -1,28 +1,31 @@
 import React from 'react';
-import s from "./Navbar.module.css"
 import {NavLink} from "react-router-dom";
+import classes from './Navbar.module.css'
+import {MenuItem, MenuList} from "@material-ui/core";
 
 function Navbar() {
-    return <nav className={s.navbar}>
-        <div className={s.item}>
-            <NavLink activeClassName={s.activeLink} to='/profile'>Profile</NavLink>
-        </div>
-        <div className={s.item}>
-            <NavLink activeClassName={s.activeLink } to='/dialogs'>Messages</NavLink>
-        </div>
-        <div className={s.item}>
-            <NavLink activeClassName={s.activeLink } to='/users'>Users</NavLink>
-        </div>
-        <div className={s.item}>
-            <a>News</a>
-        </div>
-        <div className={s.item}>
-            <a>Music</a>
-        </div>
-        <div className={s.item}>
-            <a>Settings</a>
-        </div>
-    </nav>
+    return (
+        <MenuList>
+            <MenuItem className={classes.item}>
+                <NavLink to="/profile" activeClassName={classes.active}>Profile</NavLink>
+            </MenuItem>
+            <MenuItem className={classes.item}>
+                <NavLink to="/dialogs" activeClassName={classes.active}>Messages</NavLink>
+            </MenuItem>
+            <MenuItem className={classes.item}>
+                <NavLink to="/users" activeClassName={classes.active}>Users</NavLink>
+            </MenuItem>
+            <MenuItem className={classes.item}>
+                <NavLink to="/news" activeClassName={classes.active}>News</NavLink>
+            </MenuItem>
+            <MenuItem className={classes.item}>
+                <NavLink to="/music" activeClassName={classes.active}>Music</NavLink>
+            </MenuItem>
+            <MenuItem className={classes.item}>
+                <NavLink to="/settings" activeClassName={classes.active}>Settings</NavLink>
+            </MenuItem>
+        </MenuList>
+    )
 }
 
 export default Navbar

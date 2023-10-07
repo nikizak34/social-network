@@ -7,7 +7,7 @@ import {
 } from "../../redux/usersReducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
-import {Preloader} from "../common/Preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import {
     getCurrentPage,
     getFollowingInProgress,
@@ -56,7 +56,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
         return (
             <>
-                {this.props.isFetching ? <Preloader/> : null}
                 <Users {...this.props} onClickHandler={this.onClickHandler}
 
 
