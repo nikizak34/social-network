@@ -25,7 +25,7 @@ type mapStateToPropsType={
 
 }
 type mapDispatchToPropsType={
-    logOut:()=>any
+    logOut:()=>void
 }
 const mapStateToProps=(state:AppStateType)=>{
      return{

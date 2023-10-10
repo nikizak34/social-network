@@ -13,6 +13,7 @@ import {InitialAuthStateType, initializeApp} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
 import {Grid} from "@material-ui/core";
 import Preloader from "./components/common/Preloader/Preloader";
+import {PageIsInProgress} from "./components/common/PageIsInProgress/PageIsInProgress";
 
 
 type HeaderPropsType = mapDispatchToPropsType
@@ -53,6 +54,12 @@ class App extends React.Component<HeaderPropsType> {
                             <Route path='/users' render={() => <UsersContainer/>}/>
 
                             <Route path='/login' render={() => <Login/>}/>
+
+                            <Route path='/news' render={() => <PageIsInProgress/>}/>
+
+                            <Route path='/music' render={() => <PageIsInProgress/>}/>
+
+                            <Route path='/settings' render={() => <PageIsInProgress/>}/>
 
                             <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
 

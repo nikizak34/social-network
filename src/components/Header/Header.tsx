@@ -6,7 +6,7 @@ import {AppBar, Button, makeStyles, Typography} from "@material-ui/core";
 type HeaderPropsType = {
     isAuth: boolean
     login: string | null
-    logOut: () => any
+    logOut: () => void
 }
 
 
@@ -45,24 +45,26 @@ function Header(props: HeaderPropsType) {
     return (
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar}>
-                    <img src="https://img.artlebedev.ru/everything/kazan/kazan.png" alt="error"
-                         className={classes.logo}/>
-                    <Typography variant="h6" className={classes.title}>
-                        <NavLink to="/profile" style={{textDecoration:'none',cursor:'default',color:'white'}}>Social Network</NavLink>
-                    </Typography>
-                    <div className={classes.loginBlock}>
-                        {props.isAuth
-                            ?
-                            <div>
-                                <span>{props.login}</span>
-                                <Button variant="outlined" color={"inherit"} onClick={props.logOut} className={classes.logout}>Log Out</Button>
-                            </div>
+                <img src="https://img.artlebedev.ru/everything/kazan/kazan.png" alt="error"
+                     className={classes.logo}/>
+                <Typography variant="h6" className={classes.title}>
+                    <NavLink to="/profile" style={{textDecoration: 'none', cursor: 'pointer', color: 'white'}}>Social
+                        Network</NavLink>
+                </Typography>
+                <div className={classes.loginBlock}>
+                    {props.isAuth
+                        ?
+                        <div>
+                            <span>{props.login}</span>
+                            <Button variant="outlined" color={"inherit"} onClick={props.logOut}
+                                    className={classes.logout}>Log Out</Button>
+                        </div>
 
-                            :<Button variant="outlined" color={"inherit"} className={classes.login} >
-                            <NavLink to={'/login'}>Login</NavLink>
-                            </Button>
-                        }
-                    </div>
+                        : <Button variant="outlined" color={"inherit"} className={classes.login}>
+                            <NavLink to={'/login'} className={classes.login}>Login</NavLink>
+                        </Button>
+                    }
+                </div>
             </AppBar>
         </div>
     )

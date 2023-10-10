@@ -1,6 +1,8 @@
 import React from "react";
-import s from './../Dialogs.module.css'
+import classes from './DialogItem.module.css'
 import {NavLink} from "react-router-dom";
+import {MenuItem} from "@material-ui/core";
+import userPhoto from "../../../assets/images/1200px-User_font_awesome.svg.png";
 
 export type DialogItemType = {
     name: string
@@ -10,9 +12,10 @@ export type DialogItemType = {
 export const DialogItem = (props: DialogItemType) => {
     let path = "/dialogs/" + props.id
     return (
-        <div className={s.dialog + " " + s.active}>
-            <NavLink to={'/dialogs/' + props.id}>{props.name}</NavLink>
-        </div>
+        <MenuItem className={classes.dialogItem}>
+            <img src={userPhoto} className={classes.avatar} alt="avatar"/>
+            <NavLink to={path} className={classes.userName}>{props.name}</NavLink>
+        </MenuItem>
 
     )
 }

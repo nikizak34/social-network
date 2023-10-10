@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {Input} from "@material-ui/core";
 
 
 type ProfileStatusType = {
@@ -19,24 +20,21 @@ export const ProfileStatusWithHooks = (props: ProfileStatusType) => {
         setEditMode(false)
         props.updateStatus(status)
     }
-    const onStatusChange=(e: ChangeEvent<HTMLInputElement>)=>{
+    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value)
     }
 
     return (
-        <div>
+        <div style={{textAlign: "right", fontStyle: "italic"}}>
+            <span><b>Status: </b></span>
             {!editMode
                 ?
-                <div>
-                  <b>Status:</b>  <span onDoubleClick={() => setEditMode(true)}>{status || '---'}</span>
-                </div>
+                <span onDoubleClick={() => setEditMode(true)}>{status || 'No status'}</span>
                 :
-                <div>
-                    <input onChange={onStatusChange}
-                           autoFocus onBlur={deactivateEditMode}
-                           value={status}/>
-                </div>
-            }
+                <Input onChange={onStatusChange}
+                       autoFocus
+                       onBlur={deactivateEditMode}
+                       value={status}/>}
         </div>
 
     );

@@ -1,25 +1,23 @@
 import React from 'react';
-import ty from "./Post.module.css"
+import classes from './Post.module.css'
+import {Paper} from "@material-ui/core";
+import userPhoto from "./../../../../assets/images/1200px-User_font_awesome.svg.png"
 
 type PostPropsType = {
     message: string
     likesCount: number
 
-
 }
 
-function Post(props: PostPropsType) {
+function Post({message, likesCount}: PostPropsType) {
     return (
 
-        <div className={ty.item}>
-            <div>
-                <img src="https://er.ru/media/people/member_photos_site/photos_845374/photo-1639383169.jpg"
-                     alt="error"/>
-            </div>
-            {props.message}
-        </div>
-
-
+        <Paper style={{marginTop: "20px", padding: "15px", backgroundColor: "aliceblue"}}>
+            <img className={classes.avatar} src={userPhoto}
+                 alt="avatar"/>
+            <p>{message}</p>
+            <span>{`❤️ ${likesCount}`}</span>
+        </Paper>
     )
 }
 

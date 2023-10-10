@@ -13,11 +13,10 @@ export type DialogType = {
 const initialState = {
     messages: [
         {id: 1, message: 'Yo'},
-        {id: 2, message: 'Hi'},
+        {id: 2, message: 'Can you help me?'},
         {id: 3, message: 'How your it-kamasutra?'},
-        {id: 4, message: 'Yo'},
-        {id: 5, message: 'Yo'},
-        {id: 6, message: 'Yo'}
+        {id: 4, message: 'Sure! What\'s the problem?'},
+
 
     ] as MessageType[],
     dialogs: [

@@ -1,35 +1,12 @@
-.dialogs{
+.dialogsContainer {
+    height: 100%;
+    padding: 15px;
+    overflow: auto;
     display: flex;
-    padding: 10px;
-
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.dialogsItems{
-
-
-}
-.dialogsItems .active{
-    color: gold;
-}
-
-.dialog{
-    margin-bottom: 10px;
-
-}
-
-.messages{
-
-    margin-left: 170px;
-
-}
-
-.message{
-    margin-bottom: 10px;
-
-
-}
-
-.messages .message{
-    color: white;
-
+.dialogName {
+    margin-bottom: 20px;
 }

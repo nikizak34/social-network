@@ -1,17 +1,18 @@
 import React from 'react';
-import s from "./MyPosts.module.css"
 import {PostFormDataType, PostReduxForm} from "./Post/MyPostForm";
 import {PostDataType} from "../../../redux/profileReducer";
 import Post from "./Post/Post";
+import {Paper, Typography} from "@material-ui/core";
+import classes from './MyPosts.module.css'
 
-type PostPropsType={
-    postData:PostDataType[]
-    addPost:(newPostText:string)=>void
+type PostPropsType = {
+    postData: PostDataType[]
+    addPost: (newPostText: string) => void
 }
-const MyPosts =React.memo( (props: PostPropsType) => {
+const MyPosts = React.memo((props: PostPropsType) => {
 
     let postElement = props.postData.map(el => <Post key={el.id} message={el.message}
-                                                           likesCount={el.likesCount}/>)
+                                                     likesCount={el.likesCount}/>)
 
     let onAddPost = (values: PostFormDataType) => {
         props.addPost(values.newPostText)
@@ -20,20 +21,13 @@ const MyPosts =React.memo( (props: PostPropsType) => {
 
 
     return (
-
-        <div className={s.postsBlock}>
-            <h3>My posts</h3>
+        <Paper style={{marginTop: "30px", padding: "15px", backgroundColor: "aliceblue"}}>
+            <Typography variant="h3" className={classes.postsHeader}>My Posts</Typography>
             <PostReduxForm onSubmit={onAddPost}/>
-            <div className={s.posts}>
-
+            <div className={classes.postsContainer}>
                 {postElement}
-
-
             </div>
-
-
-        </div>
-
+        </Paper>
     )
 })
 

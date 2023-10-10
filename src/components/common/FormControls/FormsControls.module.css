@@ -1,16 +1,24 @@
-
-.error{
-
-    border: solid red 2px;
+.formControl.error textarea {
+    border: 2px solid red;
 }
 
-.span {
+.formControl.error input {
+    border: 2px solid red;
+}
+
+.formControl.error span {
     color: red;
 }
 
 
 .summaryError{
-    border: red 1px solid;
+    border: 2px solid red;
+    min-height: 20px;
     padding: 5px;
     color: red;
+    margin-top: 10px;
+}
+
+.formContainer div {
+    margin-bottom: 5px;
 }

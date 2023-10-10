@@ -6,74 +6,76 @@ import {connect, useSelector} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
-import s from '../common/FormControls/FormsControls.module.css'
+import {Button, Checkbox, FormControl, FormControlLabel, Paper, Typography} from "@material-ui/core";
+import styles from './../common/FormControls/FormsControls.module.css'
 
 
 type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
-    captchaURL:string
+    captchaURL: string
 
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit,error}) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     const captcha = useSelector<AppStateType, null | string>(state => state.auth.captchaUrl)
 
     return (
         <form onSubmit={handleSubmit}>
-            <div>
+            <FormControl>
                 <Field placeholder={'Login'} name={'login'} component={Input}
                        validate={[required]}
                 />
-            </div>
-            <div>
                 <Field placeholder={'Password'} name={'password'} component={Input}
                        validate={[required]} type={'password'}
                 />
-            </div>
-            <div>
-                <Field type="checkbox" name={'rememberMe'} component={Input}/><span></span> remember me
-            </div>
-            {captcha&& <img src={captcha} alt='error' /> }
 
-            {
-                captcha&&createField('Symbols from image','captchaURL',[],Input)
-            }
-            {error && <div className={s.summaryError}>
-                {error}
-            </div>
-            }
-            <div>
-                <button>Login</button>
-            </div>
+                <FormControlLabel
+                    label={'Remember me'}
+                    control={<Checkbox name={"rememberMe"}
+                    />}
+                />
+
+                {captcha && <img src={captcha} alt='captcha'/>}
+
+                {captcha && createField('Symbols from image', 'captchaURL', [required], Input)}
+
+                {error && <div className={styles.summaryError}>{error}</div>}
+                <Button type={'submit'} variant={'contained'} color={'primary'}
+                        style={{marginTop: "15px"}}>Login</Button>
+            </FormControl>
         </form>
     );
 };
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-type LoginProps={
-    isAuth:boolean
-    login:(email: string, password: string, rememberMe: boolean,captchaURL:string)=>void
+type LoginProps = {
+    isAuth: boolean
+    login: (email: string, password: string, rememberMe: boolean, captchaURL: string) => void
 }
 const Login = (props: LoginProps) => {
     const onSubmit = (formData: FormDataType) => {
-        props.login(formData.login, formData.password, formData.rememberMe,formData.captchaURL)
+
+        props.login(formData.login, formData.password, formData.rememberMe, formData.captchaURL)
+
     }
 
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
-    return <div>
-        <h1> LOGIN</h1>
-        <LoginReduxForm onSubmit={onSubmit}/>
-    </div>
+    return (
+        <Paper style={{padding: "20px 60px 40px", marginTop: "20px"}}>
+            <Typography variant={"h3"} component={"h3"} style={{textAlign: "center", marginBottom: "15px"}}>Login</Typography>
+            <LoginReduxForm onSubmit={onSubmit}/>
+        </Paper>
+    )
 }
 
-const mapStateToProps = (state:AppStateType) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
-        isAuth:state.auth.isAuth,
+        isAuth: state.auth.isAuth,
 
 
     }

@@ -1,7 +1,7 @@
-.postsBlock{
-    padding: 10px;
+.postsHeader {
+    margin-bottom: 20px;
 }
 
-.posts{
-    margin-top: 10px;
+.postsContainer {
+    margin-top: 20px;
 }
