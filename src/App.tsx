@@ -78,7 +78,8 @@ class App extends React.Component<HeaderPropsType> {
 
 const mapStateToProps = (state: AppStateType): InitialAuthStateType => {
     return {
-        initialized: state.app.initialized
+        initialized: state.app.initialized,
+        error:state.app.error
     }
 
 }

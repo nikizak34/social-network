@@ -1,20 +1,25 @@
 import {authThunk} from "./auth-reducer";
 
-const SET_INITIALIZED = 'app/SET_INITIALIZED'
 
 const initialState = {
-    initialized: false
+    initialized: false,
+    error: null as string | null,
 }
 
 export type InitialAuthStateType = typeof initialState
 
 export const appReducer = (state: InitialAuthStateType = initialState, action: TsarPropsType2): InitialAuthStateType => {
     switch (action.type) {
-        case SET_INITIALIZED:
+        case  'app/SET_INITIALIZED':
             return {
                 ...state,
                 initialized: true
             };
+        case 'app/SET_APP_ERROR':
+            return {
+                ...state,
+                error: action.payload.error
+            }
         default:
             return state
     }
@@ -24,9 +29,15 @@ export const appReducer = (state: InitialAuthStateType = initialState, action: T
 
 type TsarPropsType2 = initializedSuccessType
 
-type initializedSuccessType = ReturnType<typeof initializedSuccess>
+type initializedSuccessType = ReturnType<typeof initializedSuccess> | ReturnType<typeof setAppError>
 export const initializedSuccess = () => {
-    return {type: SET_INITIALIZED} as const
+    return {type: 'app/SET_INITIALIZED'} as const
+}
+export const setAppError = (error: string | null) => {
+    return {
+        type: 'app/SET_APP_ERROR',
+        payload: {error}
+    } as const
 }
 
 export const initializeApp = () => (dispatch: any) => {
@@ -34,8 +45,9 @@ export const initializeApp = () => (dispatch: any) => {
     Promise.all([promise])
         .then(() => {
             dispatch(initializedSuccess())
-        })
-
+        }).catch((e: any) => {
+        dispatch(setAppError(e.message))
+    })
 }
 
 

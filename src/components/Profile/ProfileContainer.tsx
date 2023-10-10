@@ -24,7 +24,7 @@ type CommonPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
 class ProfileContainer extends React.Component<CommonPropsType> {
     refreshProfile() {
-        let userId = this.props.match.params.userId
+        let userId = +this.props.match.params.userId
         if (!userId) {
             userId = this.props.authorizedUserId!
             if (!userId) {
@@ -39,7 +39,7 @@ class ProfileContainer extends React.Component<CommonPropsType> {
         this.refreshProfile()
     }
 
-    componentDidUpdate(prevProps: Readonly<CommonPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<CommonPropsType>) {
         if (this.props.match.params.userId != prevProps.match.params.userId) {
             this.refreshProfile()
         }
@@ -64,14 +64,14 @@ export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
     profile: GetProfileResponseType
     status: string
-    authorizedUserId: string | null
+    authorizedUserId: number|null
     isAuth: boolean
 
 }
 
 type MapDispatchToPropsType = {
-    profileThunk: (userId: string) => void,
-    getStatus: (userId: string) => void
+    profileThunk: (userId: number) => void,
+    getStatus: (userId: number) => void
     updateStatus: (status: string) => void
     savePhoto: (file: File) => void
     saveProfile:(value:SubmitForm)=>Promise<void>

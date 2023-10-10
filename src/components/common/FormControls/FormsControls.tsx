@@ -1,11 +1,12 @@
-import React, {FC} from 'react';
+import React, {ElementType, FC} from 'react';
 import styles from './FormsControls.module.css'
 import {Field, WrappedFieldMetaProps} from "redux-form";
 import {InputBase, TextField} from "@material-ui/core";
+import {WrappedFieldInputProps} from "redux-form/lib/Field";
 
 type FormControlPropsType = {
     meta: WrappedFieldMetaProps
-    input: any
+    input: WrappedFieldInputProps
 }
 export const Textarea: FC<FormControlPropsType> = ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error
@@ -38,13 +39,12 @@ export const Input: FC<FormControlPropsType> = ({input, meta, ...props}) => {
 };
 
 
-export const createField = (placeholder: string, name: string, validators:Array<(value:string)=>string|undefined>, component: any, props = {}, text = '') => (
+export const createField = (placeholder: string, name: string, validators:Array<(value:string)=>string|undefined>, component: ElementType, props = {}, text = '') => (
     <div>
         <Field placeholder={placeholder} name={name}
                component={component}
                validate={validators}
                {...props}
-
         />{text}
     </div>
 )

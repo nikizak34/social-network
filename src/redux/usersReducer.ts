@@ -1,5 +1,6 @@
 import {userApi} from "../api/api";
 import {Dispatch} from "redux";
+import {setAppError} from "./app-reducer";
 
 const FOLLOW = 'user/FOLLOW'
 const UNFOLLOW = 'user/UNFOLLOW'
@@ -92,6 +93,11 @@ export const toggleFollowingProgress = (followingInProgress: boolean, userId: nu
 } as const)
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
+    try {
+
+    } catch (e: any) {
+        dispatch(setAppError(e.message))
+    }
     dispatch(setIsFetching(true))
     let data = await userApi.getUsers(currentPage, pageSize)
     dispatch(setCurrentPage(currentPage))
@@ -102,19 +108,34 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => a
 
 
 export const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: any, AC: any) => {
-    dispatch(toggleFollowingProgress(true, userId))
-    let response = await apiMethod(userId)
-    if (response.data.resultCode == 0) {
-        dispatch(AC(userId))
+    try {
+        dispatch(toggleFollowingProgress(true, userId))
+        let response = await apiMethod(userId)
+        if (response.data.resultCode == 0) {
+            dispatch(AC(userId))
+        }
+        dispatch(toggleFollowingProgress(false, userId))
+    } catch (e: any) {
+        dispatch(setAppError(e.message))
     }
-    dispatch(toggleFollowingProgress(false, userId))
+
 }
 
 
 export const unFollow = (userId: number) => (dispatch: Dispatch) => {
-    followUnfollowFlow(dispatch, userId, userApi.unFollow.bind(userApi), unFollowSuccess)
+    try {
+        followUnfollowFlow(dispatch, userId, userApi.unFollow.bind(userApi), unFollowSuccess)
+    } catch (e: any) {
+        dispatch(setAppError(e.message))
+    }
+
 }
 
 export const follow = (userId: number) => (dispatch: Dispatch) => {
-    followUnfollowFlow(dispatch, userId, userApi.follow.bind(userApi), followSuccess)
+    try {
+        followUnfollowFlow(dispatch, userId, userApi.follow.bind(userApi), followSuccess)
+    } catch (e: any) {
+        dispatch(setAppError(e.message))
+    }
+
 }

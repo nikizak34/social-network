@@ -73,7 +73,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                         < ProfileDataFormReduxForm onSubmit={onSubmit} initialValues={profile}/>
                         :
                         <ProfileData profile={profile} isOwner={isOwner}
-                                     goToEditMode={() => setEditMode(true)}/>}
+                                     goToEditMode={setEditMode}/>}
 
 
                 </Paper>
@@ -85,7 +85,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
 type ProfileData = {
     profile: GetProfileResponseType
     isOwner: boolean
-    goToEditMode: (value: any) => void
+    goToEditMode: (value: boolean) => void
 }
 const ProfileData: FC<ProfileData> = ({profile, isOwner, goToEditMode}) => {
     return (
@@ -109,7 +109,7 @@ const ProfileData: FC<ProfileData> = ({profile, isOwner, goToEditMode}) => {
                 </div>
             </List>
             {isOwner && <div>
-                <Button variant="outlined" color="primary" onClick={goToEditMode}>Edit</Button>
+                <Button variant="outlined" color="primary" onClick={()=>goToEditMode(true)}>Edit</Button>
             </div>}
         </>
     )
