@@ -6,7 +6,7 @@ import {connect, useSelector} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
-import {Button, Checkbox, FormControl, FormControlLabel, Paper, Typography} from "@material-ui/core";
+import {Button, Checkbox, FormControl, FormControlLabel, FormLabel, Paper, Typography} from "@material-ui/core";
 import styles from './../common/FormControls/FormsControls.module.css'
 
 
@@ -24,6 +24,11 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
     return (
         <form onSubmit={handleSubmit}>
             <FormControl>
+                <FormLabel>
+                    <p>Use common test account credentials:</p>
+                    <p>Email: free@samuraijs.com</p>
+                    <p>Password: free</p>
+                </FormLabel>
                 <Field placeholder={'Login'} name={'login'} component={Input}
                        validate={[required]}
                 />
